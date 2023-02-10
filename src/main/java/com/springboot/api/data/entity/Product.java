@@ -23,4 +23,10 @@ public class Product {
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    public void setName(String name) {
+    }
+
+    public void setUpdateAt(LocalDateTime now) {
+    }
 }
