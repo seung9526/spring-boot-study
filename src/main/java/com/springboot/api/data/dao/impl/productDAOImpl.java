@@ -27,13 +27,9 @@ import java.util.Optional;
     }
 
     @Override
-    public Product selectProduct(Product product) {
-        return null;
-    }
-
-    @Override
-    public Product updateProduct(Product product) {
-        return null;
+    public Optional<Product> selectProduct(Long number) {
+        Optional<Product> selectedProduct = productRepository.findById(number);
+        return selectedProduct;
     }
 
     @Override
