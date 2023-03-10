@@ -12,10 +12,10 @@ import java.util.Optional;
 @Component
     public class productDAOImpl implements ProductDAO {
 
-    private final ProductRepository productRepository;
+    private ProductRepository productRepository;
 
     @Autowired
-    public productDAOImpl(ProductRepository productRepository){
+    public productDAOImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
@@ -27,8 +27,9 @@ import java.util.Optional;
     }
 
     @Override
-    public Optional<Product> selectProduct(Long number) {
-        Optional<Product> selectedProduct = productRepository.findById(number);
+    public Product selectProduct(Long number) {
+        Product selectedProduct = productRepository.getById(number);
+
         return selectedProduct;
     }
 
@@ -37,11 +38,11 @@ import java.util.Optional;
         Optional<Product> selectedProduct = productRepository.findById(number);
 
         Product updatedProduct;
-        if(selectedProduct.isPresent()){
+        if (selectedProduct.isPresent()) {
             Product product = selectedProduct.get();
 
             product.setName(name);
-            product.setUpdateAt(LocalDateTime.now());
+            product.setUpdatedAt(LocalDateTime.now());
 
             updatedProduct = productRepository.save(product);
         } else {
@@ -49,20 +50,18 @@ import java.util.Optional;
         }
 
         return updatedProduct;
-
     }
 
     @Override
     public void deleteProduct(Long number) throws Exception {
-        Optional<Product> selectProduct = productRepository.findById(number);
+        Optional<Product> selectedProduct = productRepository.findById(number);
 
-        if(selectProduct.isPresent()){
-            Product product = selectProduct.get();
+        if (selectedProduct.isPresent()) {
+            Product product = selectedProduct.get();
 
             productRepository.delete(product);
         } else {
             throw new Exception();
         }
-
     }
 }
